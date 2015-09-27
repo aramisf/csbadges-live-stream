@@ -1,6 +1,7 @@
 'use strict';
 
 var redis = require('../lib/redis');
+var broadcast = require('../lib/broadcast');
 
 // Saves badges to database
 // badges:    Array
@@ -26,6 +27,38 @@ exports.save = function (badges, callback) {
   })
 };
 
+// Trims down the redis list.
 exports.trim = function () {
+  // Removes the last of 10 elements.
   redis.ltrim('badges', 0,9);
-}
+};
+
+// Send out badges to the broadcaster
+// badges:    Array
+// callback:  Function
+exports.send = function (badges, callback) {
+  // iterates through each badge on badges, calling broadcast.send on each one
+  badges.forEach(broadcast.send);
+
+  // returns 2 nulls, because a tipical callback in node, returns error and data
+  // so we are representing those with null
+  callback(null, null);
+};
+
+// Get badges from redis
+// callback: Function
+exports.get = function (callback) {
+  redis.lrange('badges', 0, -1, function (err, data){
+    // returns the error with no data
+    if (err) return callback(err,null);
+
+    // // interpreting the array of strings coming from redis into an array of objects
+    // data = data.map(JSON.parse);
+
+    // // returns no errors, with formatted data
+    // callback(null, data);
+
+    // both lines above made one. This will return the data back into our controller
+    callback(null, data.map(JSON.parse));
+  })
+};

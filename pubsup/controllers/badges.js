@@ -41,6 +41,25 @@ exports.save = function (req, res, next) {
 
 // Send badges to pub/sub socket in model
 exports.send = function (req, res, next) {
-  // if you don't call next here, the program won't go any further.
+
+  var badges = _.clone(req.body);
+
+  model.send(badges, function (err, data) {
+    // same as save method on this controller
+    if (err) return res.json(503, { error: true });
+    res.json(200, {error: null});
+  });
+
+  // if you don't call next here, the program won't go any further, unless the
+  // current function is the last one in the calling array.
   next();
+};
+
+// Note that this one does not need to call next, because it is the last one in
+// the array (of the get route (in app.js))
+exports.get = function (req, res) {
+  model.get(function (err, data) {
+    if (err) return res.json(503, { error: true });
+    res.json(200, data);
+  });
 };

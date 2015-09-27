@@ -31,15 +31,22 @@ app.use(express.json());
 //   res.send('hello world');
 // });
 
-// Here we start to work with real middleware:
-app.post('/', badges.save, badges.send, function(req, res){
+// Here we start to work with real middleware. Note that are more function calls
+// after badges.save. This array of functions is the middleware. Last called
+// function doesn't need the next() call in its signature.
+app.post('/', badges.save, badges.send);//, function(req, res){
 
   // sending a response to warn when it finishes
-  res.send('\ndone\n\n');
-});
+//   res.send('\ndone\n\n');
+// });
+
+// Note the absence of the next() call on the badges.get, in the controller/middleware
+app.get('/badges', badges.get);
 // --- /Routes
 
 
 // Set a listening port to our app:
-app.listen(2015);
+app.listen(2015, function(){
+  console.log("Server listening on port %d",2015);
+});
 

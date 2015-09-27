@@ -34,4 +34,7 @@ exports.save = function (req, res, next) {
 };
 
 // Send badges to pub/sub socket in model
-exports.send = function () {};
+exports.send = function (req, res, next) {
+  // if you don't call next here, the program won't go any further.
+  next();
+};

@@ -32,7 +32,11 @@ app.use(express.json());
 // });
 
 // Here we start to work with real middleware:
-app.post('/', badges.save, badges.send);
+app.post('/', badges.save, badges.send, function(req, res){
+
+  // sending a response to warn when it finishes
+  res.send('\ndone\n\n');
+});
 // --- /Routes
 
 

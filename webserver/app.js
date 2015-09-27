@@ -27,8 +27,8 @@ server.listen(port, function(){
 app.use(express.static('public'));
 
 app.get('/', function(req, res){
-  // Why to do that, if we already told express to use .static('public')?
-  // R: To make sure that 'public/index.html' is served, instead of a /index.html
+  // Q: Why to do that, if we already told express to use .static('public')?
+  // A: To make sure that 'public/index.html' is served, instead of a /index.html
   // that might exist. This one is the one that will be seen. One may not hit
   // index.html file out of static.
   res.sendfile('./public/index.html');

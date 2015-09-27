@@ -1,0 +1,4 @@
+Steps to build this application:
+
+$ npm init
+$ npm install axon express socket.io request --save

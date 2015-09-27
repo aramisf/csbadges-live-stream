@@ -1,0 +1,15 @@
+README
+
+To start the project, remember to install all necessary packages, using the
+npm package manager:
+
+$ npm install express axon redis underscore --save
+
+
+The following routes are implemented:
+
+# GET
+$ curl http://localhost:2015/badges
+
+# POST
+$ curl -X POST http://localhost:2015 -H "content-type: application/json" -d '[{"badge_id":"foo bar badge"}]'

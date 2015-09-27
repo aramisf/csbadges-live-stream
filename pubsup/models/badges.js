@@ -25,3 +25,7 @@ exports.save = function (badges, callback) {
     exports.save(badges, callback);
   })
 };
+
+exports.trim = function () {
+  redis.ltrim('badges', 0,9);
+}

@@ -30,6 +30,12 @@ exports.save = function (req, res, next) {
 
     // if there is no err, continues with execution
     next();
+
+    // but don't think of it as procedural execution, it is not. Its
+    // assynchronous, so the line above sends the execution flow ahead, but the
+    // following line will be executed in sequence, not waiting for the next()
+    // call to come back. Here we are allowing redis to work in background.
+    model.trim();
   });
 };
 
